@@ -1,0 +1,18 @@
+{
+  "name": "aoc_2024",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "day": "node ./src/index.js",
+    "newDay": "node ./src/template.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "aoc_2024": "file:"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.1"
+  }
+}

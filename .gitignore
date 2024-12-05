@@ -1,0 +1,4 @@
+node_modules/
+inputs/
+out*.txt
+package-lock.json
