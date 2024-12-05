@@ -41,7 +41,6 @@ const day5_2 = (input) => {
     // split all the arrays into sub arrays so we only have to split them the 1 time
     // initial solution was spliting on each iteration
     u.forEach((v) => { updates.push(v.split(','))});
-    r.forEach((v) => {rules.push(v.split('|'))});
     // added sort for rules as this seems to reduce the number of iterations each update needs to do.
     r.sort().forEach((v) => {rules.push(v.split('|'))});
     
