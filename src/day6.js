@@ -1,3 +1,5 @@
+const { Grid } = require('./utils/grid');
+
 const CR = '\r'.charCodeAt(0);
 const LF = '\n'.charCodeAt(0);
 const OBSTACLE = '#'.charCodeAt(0);
@@ -22,7 +24,7 @@ const turnRight = (currentDirection) => {
 
 /**
  * 
- * @param {{width: number, grid: Buffer, height: number }} map 
+ * @param {Grid} map 
  * @returns {{visited: Set<number>, isLoop: boolean}}
  * @throws Invalid Direction Exception
  */
@@ -87,11 +89,7 @@ const walkRoute = (map) => {
  * @param {Buffer} input 
  */
 const day6_1 = (input) => {
-    const map = {
-        width: input.indexOf('\r\n'),
-        grid: input.filter((value) => value !== CR && value !== LF),
-    }
-    map.height = Math.floor(map.grid.length / map.width);
+    const map = new Grid(input);
 
     const { visited } = walkRoute(map);
     console.log(`Answer: ${visited.size}`);
@@ -102,11 +100,7 @@ const day6_1 = (input) => {
  * @param {Buffer} input 
  */
 const day6_2 = (input) => {
-    const map = {
-        width: input.indexOf('\r\n'),
-        grid: input.filter((value) => value !== CR && value !== LF),
-    }
-    map.height = Math.floor(map.grid.length / map.width);
+    const map = new Grid(input);
     const startLocation = map.grid.indexOf(GUARD);
     const { visited } = walkRoute(map);
     let total = 0;
