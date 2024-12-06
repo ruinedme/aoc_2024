@@ -108,19 +108,19 @@ const day6_2 = (input) => {
     }
     map.height = Math.floor(map.grid.length / map.width);
     const startLocation = map.grid.indexOf(GUARD);
-    const obstructions = [];
     const { visited } = walkRoute(map);
+    let total = 0;
 
     visited.forEach((v1) => {
         if (v1 !== startLocation) {
             map.grid[v1] = OBSTACLE;
-            const { visited: newRoute, isLoop } = walkRoute(map);
-            if (isLoop) obstructions.push(v1);
+            const { isLoop } = walkRoute(map);
+            if (isLoop) total++;
             // reset for next loop
             map.grid[v1] = '.'.charCodeAt(0);
         }
     });
-    console.log(`Answer: ${obstructions.length}`);
+    console.log(`Answer: ${total}`);
 };
 
 /**
