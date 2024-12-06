@@ -1,9 +1,6 @@
 const CR = '\r'.charCodeAt(0);
 const LF = '\n'.charCodeAt(0);
 const OBSTACLE = '#'.charCodeAt(0);
-const PLUS = '+'.charCodeAt(0);
-const MINUS = '-'.charCodeAt(0);
-const PIPE = '|'.charCodeAt(0);
 const GUARD = '^'.charCodeAt(0);
 
 const Direction = {
@@ -118,9 +115,7 @@ const day6_2 = (input) => {
         if (v1 !== startLocation) {
             map.grid[v1] = OBSTACLE;
             const { visited: newRoute, isLoop } = walkRoute(map);
-            if (isLoop) {
-                obstructions.push(v1);
-            }
+            if (isLoop) obstructions.push(v1);
             // reset for next loop
             map.grid[v1] = '.'.charCodeAt(0);
         }
