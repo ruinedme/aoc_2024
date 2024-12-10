@@ -68,7 +68,7 @@ const day9_2 = (input) => {
     for (let i = 0; i < disk.length; i++) {
         if (disk[i] > id) id = disk[i];
     }
-    // console.log(disk);
+
     // do swaps
     while (id > 0) {
         // get block span
