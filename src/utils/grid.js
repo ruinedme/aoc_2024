@@ -35,11 +35,11 @@ class Grid {
      * @throws RangeError
      */
     getIndex(row, col) {
-        if (row > this.height || col > this.width -1){
+        if ((row > this.height || row < 0) || (col > this.width -1 || col < 0 )){
             const err = `Row or Col is out of range: ${row}, ${col}`;
             throw new RangeError(err);
         }
-        
+
         return this.width * row + col;
     }
 
@@ -53,7 +53,9 @@ class Grid {
         if (index > this.grid.length - 1 || index < 0) {
             throw new RangeError("Index out of bounds");
         }
-        const row = Math.floor(index / this.height);
+
+        // edge case for 1 row grid
+        const row = this.height > 1 ? Math.floor(index / this.height): 0;
         const col = index % this.width;
         return {row, col};
     }

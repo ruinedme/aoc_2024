@@ -1,5 +1,11 @@
-const memo = new Map();
 // solution derived from https://github.com/sanvirk99/adventcode/blob/fa8d4d3649da13187d7e9a66f5b98c54c944d558/day11.py#L49
+const memo = new Map();
+/**
+ * 
+ * @param {number} num 
+ * @param {number} i 
+ * @returns 
+ */
 const dfs = (num, i) => {
     if (i === 0) return 1;
 
