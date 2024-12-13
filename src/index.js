@@ -52,12 +52,12 @@ switch(day){
     case 11:
         days.day11(file);
         break;
-    // case 12:
-    //     days.day12(file);
-    //     break;
-    // case 13:
-    //     days.day13(file);
-    //     break;
+    case 12:
+        days.day12(file);
+        break;
+    case 13:
+        days.day13(file);
+        break;
     // case 14:
     //     days.day14(file);
     //     break;
