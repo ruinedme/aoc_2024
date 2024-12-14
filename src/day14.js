@@ -6,6 +6,8 @@ Number.prototype.mod = function (n) {
 
 const width = 101;
 const height = 103;
+const vMid = Math.floor(width / 2);
+const hMid = Math.floor(height / 2);
 
 /**
  * 
@@ -29,6 +31,15 @@ const parseInput = (input) => {
     return robots;
 };
 
+const getQuadrant = (robot) => {
+    if (robot.pos.x < vMid && robot.pos.y < hMid) return 0
+    else if (robot.pos.x > vMid && robot.pos.y < hMid) return 1;
+    else if (robot.pos.x < vMid && robot.pos.y > hMid) return 2;
+    else if (robot.pos.x > vMid && robot.pos.y > hMid) return 3;
+
+    return -1;
+};
+
 /**
  * 
  * @param {Buffer} input 
@@ -36,23 +47,17 @@ const parseInput = (input) => {
 const day14_1 = (input) => {
     const robots = parseInput(input);
     const sims = 100;
-
-    const vMid = Math.floor(width / 2);
-    const hMid = Math.floor(height / 2);
     const quadrants = [0, 0, 0, 0]; // [TL,TR,BL,BR]
 
     robots.forEach((robot) => {
         // -n % x = -y why does nodejs treat remainders as signed ints?
         robot.pos.x = (robot.pos.x + robot.velocity.x * sims).mod(width);
         robot.pos.y = (robot.pos.y + robot.velocity.y * sims).mod(height);
-
-        if (robot.pos.x < vMid && robot.pos.y < hMid) quadrants[0]++
-        else if (robot.pos.x > vMid && robot.pos.y < hMid) quadrants[1]++
-        else if (robot.pos.x < vMid && robot.pos.y > hMid) quadrants[2]++
-        else if (robot.pos.x > vMid && robot.pos.y > hMid) quadrants[3]++
+        const quadrant = getQuadrant(robot);
+        if (quadrant >= 0) quadrants[quadrant]++;
     });
 
-    const total = quadrants[0] * quadrants[1] * quadrants[2] * quadrants[3];
+    const total = quadrants.reduce((a, b) => a * b);
     console.log(`Answer: ${total}`);
 };
 
@@ -79,31 +84,31 @@ const day14_2 = (input) => {
     const robots = parseInput(input);
 
     const MAX_SIMS = width * height;
-    const grid = new Array(MAX_SIMS).fill('.');
-
     let total = 0;
-    outer: for (let i = 2; i < MAX_SIMS; i++) {
+
+    const quadrants = [0, 0, 0, 0]; // [TL,TR,BL,BR]
+    robots.forEach((robot) => {
+        const quadrant = getQuadrant(robot);
+        if (quadrant >= 0) quadrants[quadrant]++;
+    });
+    let danger = quadrants.reduce((a, b) => a * b);
+
+    for (let i = 2; i < MAX_SIMS; i++) {
+        
         for (r in robots) {
-            let oldX = (robots[r].pos.x + robots[r].velocity.x * (i - 1)).mod(width);
-            let oldY = (robots[r].pos.y + robots[r].velocity.y * (i - 1)).mod(height);
             let newX = (robots[r].pos.x + robots[r].velocity.x * i).mod(width);
             let newY = (robots[r].pos.y + robots[r].velocity.y * i).mod(height);
-            const oldIdx = getIndex(oldY, oldX);
-            const newIdx = getIndex(newY, newX);
-            grid[oldIdx] = '.';
-            grid[newIdx] = 'X';
 
+            const quadrant = getQuadrant({ pos: { x: newX, y: newY } });
+            if (quadrant >= 0) quadrants[quadrant]++;
         }
-        // At least in my input this only ever occurs twice, and both times are in the simulation that contains the easter egg
-        toMatch = 'XXXXXXXXXXXXXXXXXXXXX';
-        if (grid.join('').includes(toMatch)) {
+        const newDanger = quadrants.reduce((a, b) => a * b);
+        if (newDanger < danger) {
+            danger = newDanger;
             total = i;
-            break outer;
         }
-        // console.log('seconds: ', i);
-        // printGrid(grid)
+        quadrants.fill(0);
     }
-
 
     console.log(`Answer: ${total}`);
 };
