@@ -69,9 +69,7 @@ class Grid {
      * 
      */
     getCardinalNeighbors(index) {
-        console.log(`index: ${index}, ${this.width}, ${this.height}`);
         const {row, col} = this.getRowCol(index);
-        console.log(`${row}, ${col}`);
 
         let up = -1;
         if (row > 0) up = this.getIndex(row -1, col);
@@ -86,6 +84,15 @@ class Grid {
         if (col > 0) left = this.getIndex(row, col -1);
 
         return [up, right, down, left];
+    }
+
+    /**
+     * Renders Grid to console
+     */
+    display() {
+        for (let y = 0; y < this.height; y++){
+            console.log(this.grid.subarray(y * this.width, y * this.width + this.width).toString());
+        }
     }
 
 };
