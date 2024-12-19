@@ -22,7 +22,7 @@ const parseInput = (input) => {
     const end = map.getIndex(gridSize - 1, gridSize - 1);
     for (let i = 0; i < 1024; i++) {
         const index = parseByte(map, lines[i]);
-        map.grid[index] = '#'.charCodeAt(0);
+        map.grid[index] = WALL;
     }
 
     return { map, bytes: lines };
@@ -38,14 +38,15 @@ const dijkstra = (G, root, goal) => {
     // Create Set of unvisted nodes
     const unvisited = new Array(G.grid.length);
     const visted = [];
+    const unreachable = unvisited.length * 2;
     G.grid.forEach((_v, i) => {
-        unvisited[i] = { node: i, distance: unvisited.length + 1 }
+        unvisited[i] = { node: i, distance: unreachable }
     });
     // Set root to 0
     unvisited[root].distance = 0;
     // Select Starting Node with the smallest (finite) distance
     let current = unvisited[root];
-    while (unvisited.length > 0 && current.distance < unvisited.length + 1) {
+    while (unvisited.length > 0 && current.distance < unreachable) {
         const neighbors = G.getCardinalNeighbors(current.node);
         neighbors.forEach((v) => {
             if (G.grid[v] !== WALL) {
@@ -114,7 +115,7 @@ const day18_2 = (input) => {
     let total = 0;
     for (let i = 1024; i < bytes.length; i++) {
         const byteIndex = parseByte(map, bytes[i]);
-        map.grid[byteIndex] = '#'.charCodeAt(0);
+        map.grid[byteIndex] = WALL;
         const path = dijkstra(map, 0, goal).filter((x) => x.node === goal);
         if (path.length === 0) {
             total = bytes[i];
