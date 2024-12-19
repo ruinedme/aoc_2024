@@ -73,9 +73,9 @@ switch(day){
     case 18:
         days.day18(file);
         break;
-    // case 19:
-    //     days.day19(file);
-    //     break;
+    case 19:
+        days.day19(file);
+        break;
     // case 20:
     //     days.day20(file);
     //     break;
