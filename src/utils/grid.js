@@ -51,7 +51,7 @@ class Grid {
      */
     getRowCol(index) {
         if (index > this.grid.length - 1 || index < 0) {
-            throw new RangeError("Index out of bounds");
+            throw new RangeError(`Index out of bounds ${index}`);
         }
 
         // edge case for 1 row grid

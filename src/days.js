@@ -15,7 +15,7 @@ const { day14 } = require('./day14');
 const { day15 } = require('./day15');
 const { day16 } = require('./day16');
 const { day17 } = require('./day17');
-// const { day18 } = require('./day18');
+const { day18 } = require('./day18');
 // const { day19 } = require('./day19');
 // const { day20 } = require('./day20');
 // const { day21 } = require('./day21');
@@ -42,7 +42,7 @@ const days = {
     day15,
     day16,
     day17,
-    // day18,
+    day18,
     // day19,
     // day20,
     // day21,
